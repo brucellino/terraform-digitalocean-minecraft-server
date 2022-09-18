@@ -31,6 +31,7 @@ examples themselves
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >1.2.0 |
 | <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | >=2.22.3 |
+| <a name="requirement_http"></a> [http](#requirement\_http) | >=3.1.0 |
 | <a name="requirement_vault"></a> [vault](#requirement\_vault) | >=3.8.2 |
 
 ## Providers
@@ -38,6 +39,7 @@ examples themselves
 | Name | Version |
 |------|---------|
 | <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.22.3 |
+| <a name="provider_http"></a> [http](#provider\_http) | 3.1.0 |
 
 ## Modules
 
@@ -47,9 +49,11 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [digitalocean_ssh_key.brucellino](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/ssh_key) | resource |
 | [digitalocean_regions.available](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/regions) | data source |
 | [digitalocean_sizes.available](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/sizes) | data source |
 | [digitalocean_vpc.selected](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/vpc) | data source |
+| [http_http.github_ssh_key](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
 
 ## Inputs
 

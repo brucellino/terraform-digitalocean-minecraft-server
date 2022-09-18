@@ -43,4 +43,19 @@ data "digitalocean_regions" "available" {
 data "digitalocean_vpc" "selected" {
   name = var.vpc_name
 }
+
+
+data "http" "github_ssh_key" {
+  url = "https://github.com/brucellino.keys"
+}
+resource "digitalocean_ssh_key" "brucellino" {
+  lifecycle {
+    precondition {
+      condition     = contains([200, 201, 204], data.http.github_ssh_key.status_code)
+      error_message = "Key not present"
+    }
+  }
+  name       = "minecraft"
+  public_key = data.http.github_ssh_key.response_body
+}
 # Create the Security Groups

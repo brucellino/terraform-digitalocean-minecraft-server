@@ -17,7 +17,7 @@ terraform {
     }
   }
   backend "consul" {
-    path = "terraform/tfmod-digitalocean-minecraft-server"
+    path = "terraform/modules/tfmod-digitalocean-minecraft-server"
   }
 }
 
