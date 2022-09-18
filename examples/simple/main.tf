@@ -13,7 +13,7 @@ terraform {
 
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = ">=2.22.3"
+      version = "2.22.3"
     }
   }
   backend "consul" {
@@ -21,12 +21,22 @@ terraform {
   }
 }
 
-provider "vault" {
+provider "vault" {}
 
+data "vault_kv_secret_v2" "digitalocean" {
+  mount = "kv"
+  name  = "do"
+}
+
+provider "digitalocean" {
+  token = data.vault_kv_secret_v2.digitalocean.data["token"]
 }
 
 
 module "example" {
   source = "../../"
-  dummy  = "test"
+}
+
+output "sizes" {
+  value = module.example.sizes
 }
