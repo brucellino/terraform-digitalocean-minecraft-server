@@ -7,7 +7,7 @@ on:
     branches:
       - main
 jobs:
-  validate:
+  test:
     strategy:
       matrix:
         example:
@@ -29,13 +29,11 @@ jobs:
         run: |
           curl -fSL https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip \
           | gunzip -> terraform ; chmod u+x terraform
-      - name: Init terraform
-        run: ./terraform -chdir=examples/${{ matrix.example }} init
-      - name: Validate terraform
-        run: ./terraform -chdir=examples/${{ matrix.example }} validate
+      - name: Test
+        run: cd test ; go test
   release:
     needs:
-      - validate
+      - test
     name: Release
     runs-on: ubuntu-latest
     steps:
