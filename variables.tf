@@ -15,3 +15,8 @@ variable "mem" {
   description = "Max memory of droplet in GB"
   default     = 8
 }
+
+variable "vpc_name" {
+  type        = string
+  description = "Name of the VPC to use."
+}

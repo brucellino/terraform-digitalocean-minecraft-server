@@ -39,3 +39,8 @@ data "digitalocean_regions" "available" {
     direction = "desc"
   }
 }
+
+data "digitalocean_vpc" "selected" {
+  name = var.vpc_name
+}
+# Create the Security Groups
