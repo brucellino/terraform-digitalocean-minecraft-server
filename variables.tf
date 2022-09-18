@@ -1,8 +1,17 @@
 # variables.tf
-# Use this file to declare the variables that the module will use.
+variable "cpus" {
+  type        = number
+  description = "Number of CPUs we want with the instance"
+  default     = 4
 
-# A dummy variable is provided to force a test validation
-variable "dummy" {
-  type        = string
-  description = "dummy variable"
+  validation {
+    condition     = var.cpus <= 8
+    error_message = "Can't select an instance with more than 8 CPUs, it will cost a lot."
+  }
+}
+
+variable "mem" {
+  type        = number
+  description = "Max memory of droplet in GB"
+  default     = 8
 }

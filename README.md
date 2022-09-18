@@ -1,32 +1,8 @@
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/brucellino/tfmod-template/main.svg)](https://results.pre-commit.ci/latest/github/brucellino/tfmod-template/main) [![semantic-release: conventional](https://img.shields.io/badge/semantic--release-conventional-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/brucellino/terraform-digitalocean-minecraft-server/main.svg)](https://results.pre-commit.ci/latest/github/brucellino/tfmod-template/main) [![semantic-release: conventional](https://img.shields.io/badge/semantic--release-conventional-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
-# tfmod-template
+# Minecraft server on Digital Ocean
 
-<!-- Delete this section when using the template repository -->
-
-This is the template repository for my terraform modules.
-It attempts to follow the [default structure](https://www.terraform.io/language/modules/develop/structure) for terraform modules.
-
-It is designed to speed up development of new terraform modules by providing:
-
-1. basic terraform setup for backend, providers, _etc_.
-  1. the default required version for terraform is `>1.2.0`
-1. common pre-commit hooks configuration
-1. semantic release configuration
-1. examples directory for testing and demonstration
-1. default github actions workflows for testing and releasing
-
-## How to use
-
-<!-- Delete this section when using the template repository -->
-
-If you want to make a new terraform module from scratch:
-
-1. create a new repository using this one as template
-1. delete the sections commented with `<!-- Delete this section when using the template repository -->`
-1. update `terraform.tf` to declare the module's required providers
-1. add the examples you need in `examples/<your example>`
-1. update the test workflow in `.github/workflows/test.yml` to reflect your examples
+This creates a minecraft server on Digtial Ocean
 
 ## Pre-commit hooks
 
@@ -54,10 +30,14 @@ examples themselves
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >1.2.0 |
+| <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | >=2.22.3 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >=3.8.2 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.22.3 |
 
 ## Modules
 
@@ -65,15 +45,21 @@ No modules.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [digitalocean_regions.available](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/regions) | data source |
+| [digitalocean_sizes.available](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/sizes) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_dummy"></a> [dummy](#input\_dummy) | dummy variable | `string` | n/a | yes |
+| <a name="input_cpus"></a> [cpus](#input\_cpus) | Number of CPUs we want with the instance | `number` | `4` | no |
+| <a name="input_mem"></a> [mem](#input\_mem) | Max memory of droplet in GB | `number` | `8` | no |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_sizes"></a> [sizes](#output\_sizes) | n/a |
 <!-- END_TF_DOCS -->
