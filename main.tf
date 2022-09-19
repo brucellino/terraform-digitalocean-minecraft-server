@@ -1,4 +1,5 @@
 # Main definition
+
 data "digitalocean_sizes" "available" {
   sort {
     key       = "vcpus"
@@ -20,24 +21,40 @@ data "digitalocean_sizes" "available" {
   }
 }
 
-data "digitalocean_regions" "available" {
+# data "digitalocean_regions" "available" {
+#   filter {
+#     key    = "available"
+#     values = ["true"]
+#   }
+#   filter {
+#     key    = "features"
+#     values = ["private_networking"]
+#   }
+
+#   filter {
+#     key    = "sizes"
+#     values = tolist(data.digitalocean_sizes.available.sizes[*].slug)
+#   }
+#   sort {
+#     key       = "name"
+#     direction = "desc"
+#   }
+# }
+
+data "digitalocean_images" "selected" {
   filter {
-    key    = "available"
-    values = ["true"]
+    key    = "distribution"
+    values = ["Ubuntu"]
   }
   filter {
-    key    = "features"
-    values = ["private_networking"]
+    key    = "regions"
+    values = ["ams3"]
   }
 
-  filter {
-    key    = "sizes"
-    values = tolist(data.digitalocean_sizes.available.sizes[*].slug)
-  }
-  sort {
-    key       = "name"
-    direction = "desc"
-  }
+  # filter {
+  #   key    = "sizes"
+  #   values = [data.digitalocean_sizes.available[*].slug]
+  # }
 }
 
 data "digitalocean_vpc" "selected" {
@@ -57,5 +74,21 @@ resource "digitalocean_ssh_key" "brucellino" {
   }
   name       = "minecraft"
   public_key = data.http.github_ssh_key.response_body
+}
+
+# Create a new Web Droplet in the nyc2 region
+resource "digitalocean_droplet" "minecraft" {
+  image = data.digitalocean_images.selected.images[0].slug
+  name  = "minecraft-server"
+  # region        = data.digitalocean_regions.available.regions[0].slug
+  region        = "ams3"
+  size          = element(data.digitalocean_sizes.available.sizes, 0).slug
+  monitoring    = true
+  vpc_uuid      = data.digitalocean_vpc.selected.id
+  ssh_keys      = [digitalocean_ssh_key.brucellino.id]
+  droplet_agent = true
+
+
+
 }
 # Create the Security Groups
