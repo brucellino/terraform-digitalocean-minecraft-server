@@ -88,7 +88,61 @@ resource "digitalocean_droplet" "minecraft" {
   ssh_keys      = [digitalocean_ssh_key.brucellino.id]
   droplet_agent = true
 
+  lifecycle {
+    create_before_destroy = true
 
+  }
+  connection {
+    type = "ssh"
+    user = "root"
+    host = self.ipv4_address
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "echo hi"
+    ]
+  }
 
 }
+
 # Create the Security Groups
+resource "digitalocean_firewall" "minecraft" {
+  name = "minecraft"
+
+  droplet_ids = [digitalocean_droplet.minecraft.id]
+
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "22"
+    source_addresses = ["93.148.181.198"]
+  }
+
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "80"
+    source_addresses = []
+  }
+
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "443"
+    source_addresses = []
+  }
+
+  inbound_rule {
+    protocol         = "icmp"
+    source_addresses = []
+  }
+
+  outbound_rule {
+    protocol              = "tcp"
+    port_range            = "53"
+    destination_addresses = ["93.148.181.198"]
+  }
+
+  outbound_rule {
+    protocol              = "udp"
+    port_range            = "53"
+    destination_addresses = ["93.148.181.198"]
+  }
+}
