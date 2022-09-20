@@ -1,5 +1,7 @@
 # Main definition
-
+data "digitalocean_project" "selected" {
+  name = var.vpc_name
+}
 data "digitalocean_sizes" "available" {
   sort {
     key       = "vcpus"
@@ -89,7 +91,7 @@ resource "digitalocean_droplet" "minecraft" {
   droplet_agent = true
 
   lifecycle {
-    create_before_destroy = true
+    create_before_destroy = false
 
   }
   connection {
@@ -98,9 +100,7 @@ resource "digitalocean_droplet" "minecraft" {
     host = self.ipv4_address
   }
   provisioner "remote-exec" {
-    inline = [
-      "echo hi"
-    ]
+    script = "${path.module}/provision/install.sh"
   }
 
 }
@@ -133,16 +133,35 @@ resource "digitalocean_firewall" "minecraft" {
     protocol         = "icmp"
     source_addresses = []
   }
+}
 
-  outbound_rule {
-    protocol              = "tcp"
-    port_range            = "53"
-    destination_addresses = ["93.148.181.198"]
-  }
+resource "digitalocean_reserved_ip" "public" {
+  region = "ams3"
+}
 
-  outbound_rule {
-    protocol              = "udp"
-    port_range            = "53"
-    destination_addresses = ["93.148.181.198"]
-  }
+resource "digitalocean_reserved_ip_assignment" "minecraft" {
+  ip_address = digitalocean_reserved_ip.public.ip_address
+  droplet_id = digitalocean_droplet.minecraft.id
+}
+
+resource "digitalocean_project_resources" "droplet" {
+  project = data.digitalocean_project.selected.id
+  resources = [
+    digitalocean_droplet.minecraft.urn
+    # digitalocean_reserved_ip.public.urn
+  ]
+}
+
+data "cloudflare_zone" "dev" {
+  name = "brucellino.dev"
+}
+
+# Add a record to the domain
+resource "cloudflare_record" "minecraft" {
+  zone_id = data.cloudflare_zone.dev.id
+  name    = "minecraft"
+  value   = digitalocean_reserved_ip.public.ip_address
+  type    = "A"
+  ttl     = 1
+  proxied = true
 }

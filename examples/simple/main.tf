@@ -15,6 +15,10 @@ terraform {
       source  = "digitalocean/digitalocean"
       version = "2.22.3"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = ">=3.23"
+    }
   }
   backend "consul" {
     path = "terraform/modules/tfmod-digitalocean-minecraft-server"
@@ -32,6 +36,14 @@ provider "digitalocean" {
   token = data.vault_kv_secret_v2.digitalocean.data["token"]
 }
 
+data "vault_kv_secret_v2" "cloudflare" {
+  mount = "kv"
+  name  = "hashiathome"
+}
+
+provider "cloudflare" {
+  api_token = data.vault_kv_secret_v2.cloudflare.data["cloudflare_token_brucellino_dev"]
+}
 variable "vpc_name" {
   type        = string
   description = "Name of the VPC we will be using"
