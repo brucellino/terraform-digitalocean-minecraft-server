@@ -58,6 +58,8 @@ No modules.
 | [digitalocean_reserved_ip.public](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/reserved_ip) | resource |
 | [digitalocean_reserved_ip_assignment.minecraft](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/reserved_ip_assignment) | resource |
 | [digitalocean_ssh_key.brucellino](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/ssh_key) | resource |
+| [digitalocean_volume.minecraft_data](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/volume) | resource |
+| [digitalocean_volume_attachment.minecraft](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/volume_attachment) | resource |
 | [cloudflare_zone.dev](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/zone) | data source |
 | [digitalocean_images.selected](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/images) | data source |
 | [digitalocean_project.selected](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/project) | data source |
@@ -70,6 +72,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cpus"></a> [cpus](#input\_cpus) | Number of CPUs we want with the instance | `number` | `4` | no |
+| <a name="input_create_droplet"></a> [create\_droplet](#input\_create\_droplet) | n/a | `bool` | `false` | no |
 | <a name="input_mem"></a> [mem](#input\_mem) | Max memory of droplet in GB | `number` | `8` | no |
 | <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Name of the VPC to use. | `string` | n/a | yes |
 

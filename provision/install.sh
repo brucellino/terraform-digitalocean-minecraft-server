@@ -1,6 +1,6 @@
 #!/bin/env bash
 set -eo pipefail
-
+sleep 60
 echo "starting install"
 cat <<EOF >20auto-upgrades
 // Do "apt-get update" automatically every n-days (0=disable)
@@ -35,12 +35,14 @@ java -version
 
 # Make minecraft user
 useradd -m minecraft
-mkdir -p /home/minecraft/plugins
+mkdir -p /minecraft/plugins
+chown -Rvf minecraft:minecraft /minecraft
 PAPER_VERSION=1.19.2
 PAPER_DOWNLOADS=https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION}
 # Get paper
 PAPER_BUILD="$(curl -fs ${PAPER_DOWNLOADS}/builds | jq -r '.builds[-1].build')"
-curl -fs -o /home/minecraft/paper.jar "${PAPER_DOWNLOADS}/builds/${PAPER_BUILD}/downloads/paper-${PAPER_VERSION}-${PAPER_BUILD}.jar"
-
-curl -fs -o /home/minecraft/plugins/server-essentials.jar https://dev.bukkit.org/projects/server-essentials-for-bukkit/files/3975569/download
-nohup sudo -u minecraft java -Xms2G -Xmx2G -jar /home/minecraft/paper.jar --nogui &
+curl -fs -o /minecraft/paper.jar "${PAPER_DOWNLOADS}/builds/${PAPER_BUILD}/downloads/paper-${PAPER_VERSION}-${PAPER_BUILD}.jar"
+curl -fs -o /minecraft/plugins/server-essentials.jar https://dev.bukkit.org/projects/server-essentials-for-bukkit/files/3975569/download
+echo "eula=true" >/minecraft/eula.txt
+cd /minecraft
+sudo -u minecraft nohup java -Xms2G -Xmx2G -jar /minecraft/paper.jar --nogui &

@@ -20,3 +20,8 @@ variable "vpc_name" {
   type        = string
   description = "Name of the VPC to use."
 }
+
+variable "create_droplet" {
+  default = false
+  type    = bool
+}

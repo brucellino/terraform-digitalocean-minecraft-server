@@ -67,12 +67,12 @@ module "vpc" {
 
 
 module "example" {
-  depends_on = [module.vpc]
-  source     = "../../"
-  vpc_name   = var.vpc_name
-  cpus       = 4
-  mem        = 8
-  # vpc_name = module.vpc.digitalocean_vpc.vpc.name
+  depends_on     = [module.vpc]
+  source         = "../../"
+  vpc_name       = var.vpc_name
+  cpus           = 4
+  mem            = 8
+  create_droplet = false
 }
 
 # output "sizes" {
