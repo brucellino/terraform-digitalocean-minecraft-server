@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/brucellino/terraform-digitalocean-minecraft-server/compare/v1.1.0...v1.2.0) (2022-09-22)
+
+
+### Features
+
+* add a storage attachment and make server optional ([2c9df02](https://github.com/brucellino/terraform-digitalocean-minecraft-server/commit/2c9df02d6a4fe796d70e82a246820bd561af6bfa))
+
 # [1.1.0](https://github.com/brucellino/terraform-digitalocean-minecraft-server/compare/v1.0.0...v1.1.0) (2022-09-20)
 
 
