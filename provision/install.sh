@@ -37,7 +37,7 @@ java -version
 useradd -m minecraft
 mkdir -p /minecraft/plugins
 chown -Rvf minecraft:minecraft /minecraft
-PAPER_VERSION=1.19.2
+PAPER_VERSION=1.19.3
 PAPER_DOWNLOADS=https://api.papermc.io/v2/projects/paper/versions/${PAPER_VERSION}
 # Get paper
 PAPER_BUILD="$(curl -fs ${PAPER_DOWNLOADS}/builds | jq -r '.builds[-1].build')"
