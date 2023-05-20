@@ -43,4 +43,4 @@ repos:
         additional_dependencies: ['@commitlint/config-conventional']
 
 ci:
-  skip: [terraform_fmt, terraform_validate, terraform_tfsec, commitlint]
+  skip: [terraform_fmt, terraform_validate, terraform_tfsec, commitlint, shellcheck, shfmt]
