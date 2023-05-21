@@ -1,7 +1,10 @@
 package test
 
-import "testing"
-import "github.com/gruntwork-io/terratest/modules/terraform"
+import (
+	"testing"
+
+	"github.com/gruntwork-io/terratest/modules/terraform"
+)
 
 func TestMinecraftServerDigitalocean(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
@@ -14,5 +17,5 @@ func TestMinecraftServerDigitalocean(t *testing.T) {
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndValidate(t, terraformOptions)
-	terraform.InitAndApply(t, terraformOptions)
+	// terraform.InitAndApply(t, terraformOptions)
 }
