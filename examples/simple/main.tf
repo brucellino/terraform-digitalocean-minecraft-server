@@ -1,23 +1,14 @@
-# This is the default example
-# customise it as you see fit for your example usage of your module
-
-# add provider configurations here, for example:
-
-
 terraform {
   required_providers {
     vault = {
-      source  = "hashicorp/vault"
-      version = ">=3.8.2"
+      source = "hashicorp/vault"
     }
 
     digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = "2.22.3"
+      source = "digitalocean/digitalocean"
     }
     cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = ">=3.23"
+      source = "cloudflare/cloudflare"
     }
   }
   backend "consul" {
@@ -28,21 +19,21 @@ terraform {
 provider "vault" {}
 
 data "vault_kv_secret_v2" "digitalocean" {
-  mount = "kv"
-  name  = "do"
+  mount = "digitalocean"
+  name  = "tokens"
 }
 
 provider "digitalocean" {
-  token = data.vault_kv_secret_v2.digitalocean.data["token"]
+  token = data.vault_kv_secret_v2.digitalocean.data["minecraft"]
 }
 
 data "vault_kv_secret_v2" "cloudflare" {
-  mount = "kv"
-  name  = "hashiathome"
+  mount = "cloudflare"
+  name  = "brucellino.dev"
 }
 
 provider "cloudflare" {
-  api_token = data.vault_kv_secret_v2.cloudflare.data["cloudflare_token_brucellino_dev"]
+  api_token = data.vault_kv_secret_v2.cloudflare.data["token"]
 }
 variable "vpc_name" {
   type        = string
@@ -50,6 +41,11 @@ variable "vpc_name" {
   default     = "minecraft"
 }
 
+variable "create_droplet" {
+  type        = bool
+  default     = false
+  description = "Toggle for creating the server."
+}
 module "vpc" {
   source  = "brucellino/vpc/digitalocean"
   version = "1.0.3"
@@ -72,7 +68,7 @@ module "example" {
   vpc_name       = var.vpc_name
   cpus           = 4
   mem            = 8
-  create_droplet = false
+  create_droplet = var.create_droplet
 }
 
 # output "sizes" {
