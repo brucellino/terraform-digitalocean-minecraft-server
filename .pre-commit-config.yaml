@@ -12,7 +12,6 @@ repos:
     rev: v0.0.17
     hooks:
       - id: go-fmt
-      - id: go-mod-tidy
       - id: forbid-binary
       - id: shellcheck
       - id: shfmt
