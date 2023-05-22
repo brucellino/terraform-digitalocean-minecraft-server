@@ -70,7 +70,3 @@ module "example" {
   mem            = 8
   create_droplet = var.create_droplet
 }
-
-# output "sizes" {
-#   value = module.example.sizes
-# }
