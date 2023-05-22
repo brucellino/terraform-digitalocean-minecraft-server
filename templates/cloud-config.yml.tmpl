@@ -1,0 +1,23 @@
+#cloud-config
+mounts:
+  - ["/dev/disk/by-id/scsi-0DO_Volume_minecraftdata", "/minecraft", "ext4","defaults,nofail,discard", "0", "0"]
+users:
+  - minecraft
+packages_update: true
+packages_upgrade: true
+packages:
+  - openjdk-17-jre-headless
+  - jq
+  - git
+runcmd:
+  - [ ls, -l, / ]
+  - [ sh, -xc, "echo $(date) ': hello world!'" ]
+  - [ sh, -c, echo "=========hello world=========" ]
+  - ls -l /minecraft
+  - [mkdir, -p, /minecraft/plugins]
+  - [chown, -Rvf, minecraft:minecraft, /minecraft]
+  - curl -fs -o /minecraft/paper.jar "https://api.papermc.io/v2/projects/paper/versions/${paper_version}/builds/${paper_build}/downloads/paper-${paper_version}-${paper_build}.jar"
+  - curl -fs -o /minecraft/plugins/server-essentials.jar https://dev.bukkit.org/projects/server-essentials-for-bukkit/files/3975569/download
+  - echo "eula=true" >/minecraft/eula.txt
+  - cd /minecraft
+  - sudo -u minecraft nohup java -Xms2G -Xmx2G -jar /minecraft/paper.jar --nogui &

@@ -52,6 +52,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [cloudflare_record.minecraft](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
+| [cloudflare_record.minecraft_srv](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
 | [digitalocean_droplet.minecraft](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet) | resource |
 | [digitalocean_firewall.minecraft](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/firewall) | resource |
 | [digitalocean_project_resources.droplet](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project_resources) | resource |
@@ -63,9 +64,11 @@ No modules.
 | [cloudflare_zone.dev](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/zone) | data source |
 | [digitalocean_images.selected](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/images) | data source |
 | [digitalocean_project.selected](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/project) | data source |
+| [digitalocean_regions.available](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/regions) | data source |
 | [digitalocean_sizes.available](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/sizes) | data source |
 | [digitalocean_vpc.selected](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/vpc) | data source |
 | [http_http.github_ssh_key](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
+| [http_http.paper_downloads](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
 
 ## Inputs
 
@@ -74,6 +77,7 @@ No modules.
 | <a name="input_cpus"></a> [cpus](#input\_cpus) | Number of CPUs we want with the instance | `number` | `4` | no |
 | <a name="input_create_droplet"></a> [create\_droplet](#input\_create\_droplet) | n/a | `bool` | `false` | no |
 | <a name="input_mem"></a> [mem](#input\_mem) | Max memory of droplet in GB | `number` | `8` | no |
+| <a name="input_paper_version"></a> [paper\_version](#input\_paper\_version) | Version of PaperMC to use | `string` | `"1.19.4"` | no |
 | <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Name of the VPC to use. | `string` | n/a | yes |
 
 ## Outputs

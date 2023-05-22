@@ -23,25 +23,26 @@ data "digitalocean_sizes" "available" {
   }
 }
 
-# data "digitalocean_regions" "available" {
-#   filter {
-#     key    = "available"
-#     values = ["true"]
-#   }
-#   filter {
-#     key    = "features"
-#     values = ["private_networking"]
-#   }
+data "digitalocean_regions" "available" {
+  filter {
+    key    = "available"
+    values = ["true"]
+  }
 
-#   filter {
-#     key    = "sizes"
-#     values = tolist(data.digitalocean_sizes.available.sizes[*].slug)
-#   }
-#   sort {
-#     key       = "name"
-#     direction = "desc"
-#   }
-# }
+  filter {
+    key    = "sizes"
+    values = tolist(data.digitalocean_sizes.available.sizes[*].slug)
+  }
+
+  filter {
+    key    = "slug"
+    values = [data.digitalocean_vpc.selected.region]
+  }
+  sort {
+    key       = "name"
+    direction = "desc"
+  }
+}
 
 data "digitalocean_images" "selected" {
   filter {
@@ -50,13 +51,8 @@ data "digitalocean_images" "selected" {
   }
   filter {
     key    = "regions"
-    values = ["ams3"]
+    values = [data.digitalocean_vpc.selected.region]
   }
-
-  # filter {
-  #   key    = "sizes"
-  #   values = [data.digitalocean_sizes.available[*].slug]
-  # }
 }
 
 data "digitalocean_vpc" "selected" {
@@ -79,50 +75,59 @@ resource "digitalocean_ssh_key" "brucellino" {
 }
 
 resource "digitalocean_volume" "minecraft_data" {
-  region                  = "ams3"
+  region                  = data.digitalocean_regions.available.regions[0].slug
   name                    = "minecraftdata"
-  size                    = 2
+  size                    = 10
   initial_filesystem_type = "ext4"
   description             = "Minecraft Data"
+  lifecycle {
+    ignore_changes = [initial_filesystem_type]
+  }
 }
+
+data "http" "paper_downloads" {
+  url = "https://api.papermc.io/v2/projects/paper/versions/${var.paper_version}/builds"
+  lifecycle {
+    postcondition {
+      condition     = contains([200, 201, 204], self.status_code)
+      error_message = "Status code invalid"
+    }
+  }
+}
+
+locals {
+  build = element(jsondecode(data.http.paper_downloads.response_body).builds, length(jsondecode(data.http.paper_downloads.response_body).builds) - 1)
+  # ${paper_downloads}/builds/${paper_build}/downloads/paper-${paper_version}-${paper_build}
+}
+
+
 
 # Create a new Web Droplet in the nyc2 region
 resource "digitalocean_droplet" "minecraft" {
-  count = var.create_droplet ? 1 : 0
-  image = data.digitalocean_images.selected.images[0].slug
-  name  = "minecraft-server"
-  # region        = data.digitalocean_regions.available.regions[0].slug
-  region        = "ams3"
+  count  = var.create_droplet ? 1 : 0
+  image  = data.digitalocean_images.selected.images[0].slug
+  name   = "minecraft-server"
+  region = data.digitalocean_regions.available.regions[0].slug
+  # region        = "ams3"
   size          = element(data.digitalocean_sizes.available.sizes, 0).slug
   monitoring    = true
   vpc_uuid      = data.digitalocean_vpc.selected.id
   ssh_keys      = [digitalocean_ssh_key.brucellino.id]
   droplet_agent = true
-  user_data     = <<EOF
-  #cloud-config
-  mounts:
-    - ["/dev/disk/by-id/scsi-0DO_Volume_minecraftdata", "/minecraft", "ext4","defaults,nofail,discard", "0", "0"]
-  users:
-    - minecraft
-  packages_update: true
-  packages_upgrade: true
-  packages:
-    - openjdk-17-jre-headless
-    - jq
-    - git
+  user_data = templatefile("${path.module}/templates/cloud-config.yml.tmpl", {
+    paper_version = var.paper_version
+    paper_build   = local.build.build
+  })
 
-  EOF
   lifecycle {
-    create_before_destroy = false
+    create_before_destroy = true
   }
-  # connection {
-  #   type = "ssh"
-  #   user = "root"
-  #   host = self.ipv4_address
-  # }
-  # provisioner "remote-exec" {
-  #   script = "${path.module}/provision/install.sh"
-  # }
+  connection {
+    type = "ssh"
+    user = "root"
+    host = self.ipv4_address
+  }
+
 }
 
 
@@ -140,9 +145,10 @@ resource "digitalocean_firewall" "minecraft" {
   droplet_ids = [digitalocean_droplet.minecraft[0].id]
 
   inbound_rule {
-    protocol         = "tcp"
-    port_range       = "1-65535"
-    source_addresses = ["93.148.181.198"]
+    protocol   = "tcp"
+    port_range = "1-65535"
+    # source_addresses = ["93.148.181.198"]
+    source_addresses = ["0.0.0.0/0"]
   }
 
   inbound_rule {
@@ -194,6 +200,23 @@ resource "cloudflare_record" "minecraft" {
   name    = "minecraft"
   value   = digitalocean_reserved_ip.public.ip_address
   type    = "A"
-  ttl     = 1
+  ttl     = 60
   proxied = false
+}
+
+
+resource "cloudflare_record" "minecraft_srv" {
+  zone_id = data.cloudflare_zone.dev.id
+  name    = "mc_service"
+  type    = "SRV"
+
+  data {
+    service  = "_minecraft"
+    proto    = "tcp"
+    name     = "mc_service"
+    priority = 0
+    weight   = 0
+    port     = 25565
+    target   = cloudflare_record.minecraft.name
+  }
 }
