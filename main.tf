@@ -61,7 +61,7 @@ data "digitalocean_vpc" "selected" {
 
 
 data "http" "github_ssh_key" {
-  url = "https://github.com/brucellino.keys"
+  url = "https://github.com/${var.instance_admin_user}.keys"
 }
 resource "digitalocean_ssh_key" "brucellino" {
   lifecycle {
@@ -97,7 +97,6 @@ data "http" "paper_downloads" {
 
 locals {
   build = element(jsondecode(data.http.paper_downloads.response_body).builds, length(jsondecode(data.http.paper_downloads.response_body).builds) - 1)
-  # ${paper_downloads}/builds/${paper_build}/downloads/paper-${paper_version}-${paper_build}
 }
 
 
@@ -117,6 +116,8 @@ resource "digitalocean_droplet" "minecraft" {
   user_data = templatefile("${path.module}/templates/cloud-config.yml.tmpl", {
     paper_version = var.paper_version
     paper_build   = local.build.build
+    # Set mx based on the size of the instance memory -- should be computed
+    # mx            = element(data.digitalocean_sizes.available.sizes, 0).memory
   })
 
   lifecycle {
@@ -130,12 +131,14 @@ resource "digitalocean_droplet" "minecraft" {
 
 }
 
-
 resource "digitalocean_volume_attachment" "minecraft" {
   count      = var.create_droplet ? 1 : 0
   droplet_id = digitalocean_droplet.minecraft[0].id
   volume_id  = digitalocean_volume.minecraft_data.id
 }
+
+
+data "cloudflare_ip_ranges" "cloudflare" {}
 
 # Create the Security Groups
 resource "digitalocean_firewall" "minecraft" {
@@ -145,18 +148,16 @@ resource "digitalocean_firewall" "minecraft" {
   droplet_ids = [digitalocean_droplet.minecraft[0].id]
 
   inbound_rule {
-    protocol   = "tcp"
-    port_range = "1-65535"
-    # source_addresses = ["93.148.181.198"]
-    source_addresses = ["0.0.0.0/0"]
+    protocol         = "tcp"
+    port_range       = "25565"
+    source_addresses = tolist(data.cloudflare_ip_ranges.cloudflare.ipv4_cidr_blocks)
   }
 
   inbound_rule {
     protocol         = "udp"
-    port_range       = "1-65535"
-    source_addresses = ["93.148.181.198"]
+    port_range       = "25565"
+    source_addresses = tolist(data.cloudflare_ip_ranges.cloudflare.ipv4_cidr_blocks)
   }
-
 
   inbound_rule {
     protocol         = "icmp"

@@ -31,3 +31,9 @@ variable "paper_version" {
   type        = string
   description = "Version of PaperMC to use"
 }
+
+variable "instance_admin_user" {
+  default     = "brucellino"
+  type        = string
+  description = "Github user which will be made admin of the instance. Takes their ssh key from Github and adds it to the instance."
+}

@@ -10,10 +10,6 @@ packages:
   - jq
   - git
 runcmd:
-  - [ ls, -l, / ]
-  - [ sh, -xc, "echo $(date) ': hello world!'" ]
-  - [ sh, -c, echo "=========hello world=========" ]
-  - ls -l /minecraft
   - [mkdir, -p, /minecraft/plugins]
   - [chown, -Rvf, minecraft:minecraft, /minecraft]
   - curl -fs -o /minecraft/paper.jar "https://api.papermc.io/v2/projects/paper/versions/${paper_version}/builds/${paper_build}/downloads/paper-${paper_version}-${paper_build}.jar"
