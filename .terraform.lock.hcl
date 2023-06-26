@@ -69,21 +69,21 @@ provider "registry.terraform.io/hashicorp/http" {
 }
 
 provider "registry.terraform.io/hashicorp/vault" {
-  version     = "3.16.0"
+  version     = "3.17.0"
   constraints = ">= 3.8.2"
   hashes = [
-    "h1:LcngABSSnKdeeaj1hK8WRpCA9R1ocYH6XFZ+c/dFWhA=",
-    "zh:03b5cf4fdf6edf17102f57e2a92d3ce87df9865fbb6ac545deed2f84b69e0e29",
-    "zh:13000f00f5b00d0d20256e9e72278c732bc703c179562723458deb67d12f19ab",
-    "zh:1d0c5a79c7c6924373425fc0c4abe82d8bec1e98472f34ea5a417c809a2af547",
-    "zh:3ed6720f6b0894f866b0716e3333fc2f22a2df87af12eac5dc51f63637d9a95e",
-    "zh:5eaa170740b989fdaae56a1b481687a1eac0fea58be8b983c1bec0fca16cc12b",
-    "zh:6010824de7c57b960753e088f1eedd377854ccd16e3fe8725ca0ef393657ff35",
+    "h1:7xTn3wS4mMa3HpqqnhtBEs9EModIY9mkDrCVSUP2ADM=",
+    "zh:06eca14b5c002aa9f93ac2fe05da3e3d320d7804a896021a7a8ba3f78df2b1b7",
+    "zh:104594e517adad642e73a32e11d3cbf64264d645d5ebbb4a30e503bd53d133c5",
+    "zh:361717baea01af6463483e4d2302b844944e0d58c68c7c179c569f3215d1521d",
     "zh:78d5eefdd9e494defcb3c68d282b8f96630502cac21d1ea161f53cfe9bb483b3",
-    "zh:891bf45b42ad924b06d7085530c8f65fafe2e88b44be5087de96e9d9f52dbb26",
-    "zh:9195254fa9dedc23f5c02304fa20884c3688599f448b0efac95d7a84bc3bae9b",
-    "zh:c4078d412c91409f342aba3e235f6d454fb2b17d041636ebdddc1a0f7bfc16b4",
-    "zh:eb69fff318ec404e5b1586423e6a216e98f6486abe53301e2970bd0daed70982",
-    "zh:fea58fd8bb333ac5f744e8a699c63d8d7f7725a826905542ed8bbfe19a945d8e",
+    "zh:7aaa5b6f2dad8c268ccbf58b247d3f63a77164766741d99a4d652da75f26a71b",
+    "zh:9fc46d3eae6a14fae857a23d0b79609a871b61e1c76ef2946f6912c891f0842f",
+    "zh:b9dfdce2eb568c4b04805a76868f6e8f48b0ee3b97ecf23421c07a253c2fe7c2",
+    "zh:bde2d1c5e82a4bbc7f0de69623fc43e4eb67f63fda763095e8be35cce95b7416",
+    "zh:e641b22a4c9c5cbd7bea84e498b5e83e9bf299118c5b3488327db6f03e1dc374",
+    "zh:ec57bfbd8287f506499ce082b17e30e349468320dbacdcbdc7ecb8e86e02079a",
+    "zh:f47726e316e35483db0c9c472fda55d0b51e2cc00d65107d655cb87029db00f7",
+    "zh:f5614faa77ba76afb834c3604d22af6500b764e090c47c32d46ed981011b34a3",
   ]
 }
