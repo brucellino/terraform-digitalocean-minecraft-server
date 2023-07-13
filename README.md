@@ -33,7 +33,7 @@ examples themselves
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | >= 3.23 |
 | <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | >=2.22.3 |
 | <a name="requirement_http"></a> [http](#requirement\_http) | >=3.1.0 |
-| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >=3.8.2 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 3.8.2 |
 
 ## Providers
 
