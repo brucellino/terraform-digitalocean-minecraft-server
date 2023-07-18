@@ -8,7 +8,7 @@ terraform {
 
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = ">=2.22.3"
+      version = ">= 2.22.3"
     }
 
     http = {
