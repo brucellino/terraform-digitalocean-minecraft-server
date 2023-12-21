@@ -32,7 +32,7 @@ examples themselves
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >1.2.0 |
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | >= 3.23 |
 | <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | >= 2.22.3 |
-| <a name="requirement_http"></a> [http](#requirement\_http) | >= 3.1.0 |
+| <a name="requirement_http"></a> [http](#requirement\_http) | >=3.1.0 |
 | <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 3.8.2 |
 
 ## Providers
@@ -40,7 +40,7 @@ examples themselves
 | Name | Version |
 |------|---------|
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.20.0 |
-| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.34.0 |
+| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.34.1 |
 | <a name="provider_http"></a> [http](#provider\_http) | 3.4.1 |
 
 ## Modules
