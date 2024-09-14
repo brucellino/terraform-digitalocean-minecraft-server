@@ -41,7 +41,7 @@ examples themselves
 |------|---------|
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.40.0 |
 | <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.41.0 |
-| <a name="provider_http"></a> [http](#provider\_http) | 3.4.4 |
+| <a name="provider_http"></a> [http](#provider\_http) | 3.4.5 |
 
 ## Modules
 
