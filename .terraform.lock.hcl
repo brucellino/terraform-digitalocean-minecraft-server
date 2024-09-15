@@ -5,9 +5,6 @@ provider "registry.terraform.io/cloudflare/cloudflare" {
   version     = "4.41.0"
   constraints = ">= 3.23.0"
   hashes = [
-    "h1:FSgYM4+LHMbX/a4Y1kx7FPPWmXqS3/MQYzvjMJHHHWM=",
-    "h1:Tx6Nh3BWP1x9L3KK/Eyi+ET0T26g3+jf1jyiuqpNIis=",
-    "h1:YxQqmiES/Yanq/VfGqBEqg+VIO7FGhO88aKoWFHyGIg=",
     "h1:v7sHvKq7oqMYPn47ULHFyIQsKD9o+6Xg/uHbxQUixEw=",
     "h1:wo/x4atWyXuWGlfR6h5nH0YwBAmBwTRY27HtWP8ycLo=",
     "zh:339d26e06dc6fb299ea8aad9476a60fd65bb1d40631ae8eeb81cddf2dd2bebc8",
