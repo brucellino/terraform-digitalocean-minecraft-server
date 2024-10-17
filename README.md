@@ -39,7 +39,7 @@ examples themselves
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.43.0 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.44.0 |
 | <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.42.0 |
 | <a name="provider_http"></a> [http](#provider\_http) | 3.4.5 |
 
