@@ -40,7 +40,7 @@ examples themselves
 | Name | Version |
 |------|---------|
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.49.1 |
-| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.46.0 |
+| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.46.1 |
 | <a name="provider_http"></a> [http](#provider\_http) | 3.4.5 |
 
 ## Modules
