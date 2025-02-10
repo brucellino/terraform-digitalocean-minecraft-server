@@ -19,23 +19,29 @@ jobs:
         uses: 'actions/checkout@v4'
         with:
           fetch-depth: 0
-      - name: Validate
+      - name: Get Latest Consul
         run: |
-          curl -fSL https://releases.hashicorp.com/consul/1.12.3/consul_1.12.3_linux_amd64.zip \
-          | gunzip -> consul ; chmod u+x consul
+          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/consul\?limit\=20\&license_class\=oss | jq -r '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
+          curl -fSL ${release_url} -o consul.zip
+          unzip -p consul consul.zip ; chmod u+x consul
       - name: Start Consul dev server
         run: ./consul agent -server -dev &
-      - run: |
-          curl -fSL https://releases.hashicorp.com/vault/1.13.2/vault_1.13.2_linux_amd64.zip \
-          | gunzip -> vault ; chmod u+x vault
+      - name: Get Latest Vault
+        run: |
+          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/vault\?limit\=20\&license_class\=oss | jq -r '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
+          curl -fSL ${release_url} -o vault.zip
+          unzip -p vault vault.zip ; chmod u+x vault
       - name: Start Vault dev server
         run: ./vault server -dev &
-      - name: Get Terraform
+      - name: Get Latest Terraform
         run: |
-          curl -fSL https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip \
-          | gunzip -> terraform ; chmod u+x terraform
+          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/terraform\?limit\=20\&license_class\=oss | jq -r '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
+          curl -fSL ${release_url} -o terraform.zip
+          unzip -p terraform terraform.zip ; chmod u+x terraform
       - name: Test
         run: cd test ; go test
+        env:
+          PATH: ${PATH}:${PWD}
   release:
     needs:
       - test
