@@ -5,7 +5,6 @@ terraform {
       source  = "hashicorp/vault"
       version = "~> 5"
     }
-
     digitalocean = {
       source = "digitalocean/digitalocean"
     }
