@@ -27,9 +27,9 @@ jobs:
           cache: true
           experimental: true
       - name: Start Consul dev server
-        run: ./consul agent -server -dev &
+        run: consul agent -server -dev &
       - name: Start Vault dev server
-        run: ./vault server -dev &
+        run: vault server -dev &
       - name: Test
         run: cd test ; go test
   release:
