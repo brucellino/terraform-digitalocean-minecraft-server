@@ -26,8 +26,6 @@ jobs:
           '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
           echo ${release_url}
           curl -fSL ${release_url} -o consul.zip
-          ls -lht
-          file consul.zip
           unzip -j consul.zip consul -d .
           chmod u+x consul
       - name: Start Consul dev server
@@ -38,7 +36,7 @@ jobs:
           | jq -r \
           '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
           curl -fSL ${release_url} -o vault.zip
-          unzip vault.zip -p vault
+          unzip -j vault.zip vault -d .
           chmod u+x vault
       - name: Start Vault dev server
         run: ./vault server -dev &
@@ -48,7 +46,7 @@ jobs:
           | jq -r \
           '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
           curl -fSL ${release_url} -o terraform.zip
-          unzip terraform.zip -p terraform
+          unzip -j terraform.zip terraform -d .
           chmod u+x terraform
       - name: Test
         run: cd test ; go test
