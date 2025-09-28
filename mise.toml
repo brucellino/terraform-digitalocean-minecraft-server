@@ -1,4 +1,4 @@
 [tools]
 terraform = "1.13.3"
-consul = "1.21.0"
+consul = "1.21.5"
 vault = "1.20.4"
