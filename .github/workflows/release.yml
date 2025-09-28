@@ -19,39 +19,19 @@ jobs:
         uses: "actions/checkout@v5"
         with:
           fetch-depth: 0
-      - name: Get Latest Consul
-        run: |
-          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/consul\?limit\=20\&license_class\=oss \
-          | jq -r \
-          '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
-          echo ${release_url}
-          curl -fSL ${release_url} -o consul.zip
-          unzip -j consul.zip consul -d .
-          chmod u+x consul
+      - name: Activate tools
+        uses: jdx/mise-action@v2
+        with:
+          version: 2025.9.21
+          install: true
+          cache: true
+          experimental: true
       - name: Start Consul dev server
         run: ./consul agent -server -dev &
-      - name: Get Latest Vault
-        run: |
-          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/vault\?limit\=20\&license_class\=oss \
-          | jq -r \
-          '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
-          curl -fSL ${release_url} -o vault.zip
-          unzip -j vault.zip vault -d .
-          chmod u+x vault
       - name: Start Vault dev server
         run: ./vault server -dev &
-      - name: Get Latest Terraform
-        run: |
-          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/terraform\?limit\=20\&license_class\=oss \
-          | jq -r \
-          '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
-          curl -fSL ${release_url} -o terraform.zip
-          unzip -j terraform.zip terraform -d .
-          chmod u+x terraform
       - name: Test
         run: cd test ; go test
-        env:
-          PATH: ${PATH}:${PWD}
   release:
     needs:
       - test
