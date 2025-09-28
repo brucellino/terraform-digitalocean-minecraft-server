@@ -21,7 +21,7 @@ repos:
       - id: detect-secrets
         args: ["--baseline", ".secrets.baseline"]
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.100.0
+    rev: v1.100.1
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
@@ -39,7 +39,15 @@ repos:
     rev: v9.22.0
     hooks:
       - id: commitlint
-        additional_dependencies: ['@commitlint/config-conventional']
+        additional_dependencies: ["@commitlint/config-conventional"]
 
 ci:
-  skip: [terraform_fmt, terraform_validate, terraform_tfsec, commitlint, shellcheck, shfmt]
+  skip:
+    [
+      terraform_fmt,
+      terraform_validate,
+      terraform_trivy,
+      commitlint,
+      shellcheck,
+      shfmt,
+    ]
