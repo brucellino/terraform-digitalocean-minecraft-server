@@ -28,8 +28,6 @@ jobs:
           experimental: true
       - name: Start Consul dev server
         run: consul agent -server -dev &
-      - name: Create kv store for backend
-        run: consul kv put terraform/modules/tfmod-digitalocean-minecraft-server '{}'
       - name: Start Vault dev server
         run: vault server -dev -dev-root-token-id="root" &
       - name: Test
