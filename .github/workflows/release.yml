@@ -31,9 +31,13 @@ jobs:
       - name: Create kv store for backend
         run: consul kv put terraform/modules/tfmod-digitalocean-minecraft-server '{}'
       - name: Start Vault dev server
-        run: vault server -dev &
+        run: vault server -dev -dev-root-token-id="root" &
       - name: Test
         run: cd test ; go test
+        env:
+          VAULT_ADDR: "http://localhost:8200"
+          CONSUL_HTTP_ADDR: "http://localhost:8500"
+          VAULT_TOKEN: "root"
   release:
     needs:
       - test
