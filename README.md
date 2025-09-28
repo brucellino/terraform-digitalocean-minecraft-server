@@ -29,19 +29,19 @@ examples themselves
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >1.2.0 |
-| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | >= 3.23 |
-| <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | >= 2.22.3 |
-| <a name="requirement_http"></a> [http](#requirement\_http) | >=3.1.0 |
-| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 3.8.2 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.10.0 |
+| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 5.10 |
+| <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | ~> 2.67 |
+| <a name="requirement_http"></a> [http](#requirement\_http) | ~> 3.5 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | ~> 5 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | >= 3.23 |
-| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | >= 2.22.3 |
-| <a name="provider_http"></a> [http](#provider\_http) | >=3.1.0 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 5.10.1 |
+| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.67.0 |
+| <a name="provider_http"></a> [http](#provider\_http) | 3.5.0 |
 
 ## Modules
 
@@ -51,8 +51,8 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [cloudflare_record.minecraft](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
-| [cloudflare_record.minecraft_srv](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
+| [cloudflare_dns_record.minecraft](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record) | resource |
+| [cloudflare_dns_record.minecraft_srv](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record) | resource |
 | [digitalocean_droplet.minecraft](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet) | resource |
 | [digitalocean_firewall.minecraft](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/firewall) | resource |
 | [digitalocean_project_resources.droplet](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project_resources) | resource |
@@ -79,7 +79,7 @@ No modules.
 | <a name="input_create_droplet"></a> [create\_droplet](#input\_create\_droplet) | n/a | `bool` | `false` | no |
 | <a name="input_instance_admin_user"></a> [instance\_admin\_user](#input\_instance\_admin\_user) | Github user which will be made admin of the instance. Takes their ssh key from Github and adds it to the instance. | `string` | `"brucellino"` | no |
 | <a name="input_mem"></a> [mem](#input\_mem) | Max memory of droplet in GB | `number` | `8` | no |
-| <a name="input_paper_version"></a> [paper\_version](#input\_paper\_version) | Version of PaperMC to use | `string` | `"1.19.4"` | no |
+| <a name="input_paper_version"></a> [paper\_version](#input\_paper\_version) | Version of PaperMC to use | `string` | `"1.21.3"` | no |
 | <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Name of the VPC to use. | `string` | n/a | yes |
 
 ## Outputs

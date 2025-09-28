@@ -27,7 +27,7 @@ variable "create_droplet" {
 }
 
 variable "paper_version" {
-  default     = "1.19.4"
+  default     = "1.21.3"
   type        = string
   description = "Version of PaperMC to use"
 }

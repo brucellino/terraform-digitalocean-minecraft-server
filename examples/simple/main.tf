@@ -1,7 +1,9 @@
 terraform {
+  required_version = ">= 1.10"
   required_providers {
     vault = {
-      source = "hashicorp/vault"
+      source  = "hashicorp/vault"
+      version = "~> 5"
     }
 
     digitalocean = {
@@ -18,22 +20,22 @@ terraform {
 
 provider "vault" {}
 
-data "vault_kv_secret_v2" "digitalocean" {
+ephemeral "vault_kv_secret_v2" "digitalocean" {
   mount = "digitalocean"
   name  = "tokens"
 }
 
 provider "digitalocean" {
-  token = data.vault_kv_secret_v2.digitalocean.data["minecraft"]
+  token = ephemeral.vault_kv_secret_v2.digitalocean.data["minecraft"]
 }
 
-data "vault_kv_secret_v2" "cloudflare" {
+ephemeral "vault_kv_secret_v2" "cloudflare" {
   mount = "cloudflare"
   name  = "brucellino.dev"
 }
 
 provider "cloudflare" {
-  api_token = data.vault_kv_secret_v2.cloudflare.data["token"]
+  api_token = ephemeral.vault_kv_secret_v2.cloudflare.data["token"]
 }
 variable "vpc_name" {
   type        = string
@@ -43,7 +45,7 @@ variable "vpc_name" {
 
 variable "create_droplet" {
   type        = bool
-  default     = false
+  default     = true
   description = "Toggle for creating the server."
 }
 module "vpc" {
@@ -69,4 +71,5 @@ module "example" {
   cpus           = 4
   mem            = 8
   create_droplet = var.create_droplet
+  paper_version  = "1.21.4"
 }

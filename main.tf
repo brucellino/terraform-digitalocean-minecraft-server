@@ -53,6 +53,14 @@ data "digitalocean_images" "selected" {
     key    = "regions"
     values = [data.digitalocean_vpc.selected.region]
   }
+  # filter {
+  #   key    = "type"
+  #   values = ["distribution"]
+  # }
+  filter {
+    key    = "slug"
+    values = ["ubuntu-24-10-x64"]
+  }
 }
 
 data "digitalocean_vpc" "selected" {
@@ -63,6 +71,7 @@ data "digitalocean_vpc" "selected" {
 data "http" "github_ssh_key" {
   url = "https://github.com/${var.instance_admin_user}.keys"
 }
+
 resource "digitalocean_ssh_key" "brucellino" {
   lifecycle {
     precondition {
@@ -148,20 +157,33 @@ resource "digitalocean_firewall" "minecraft" {
   droplet_ids = [digitalocean_droplet.minecraft[0].id]
 
   inbound_rule {
-    protocol         = "tcp"
-    port_range       = "25565"
-    source_addresses = tolist(data.cloudflare_ip_ranges.cloudflare.ipv4_cidr_blocks)
+    protocol   = "tcp"
+    port_range = "25565"
+    # source_addresses = tolist(data.cloudflare_ip_ranges.cloudflare.ipv4_cidr_blocks)
+    source_addresses = ["0.0.0.0/0"]
   }
 
   inbound_rule {
     protocol         = "udp"
     port_range       = "25565"
-    source_addresses = tolist(data.cloudflare_ip_ranges.cloudflare.ipv4_cidr_blocks)
+    source_addresses = tolist(data.cloudflare_ip_ranges.cloudflare.ipv4_cidrs)
   }
 
   inbound_rule {
     protocol         = "icmp"
     source_addresses = []
+  }
+
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "22"
+    source_addresses = ["0.0.0.0/0"]
+  }
+
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "443"
+    source_addresses = ["0.0.0.0/0"]
   }
 
   outbound_rule {
@@ -192,32 +214,35 @@ resource "digitalocean_project_resources" "droplet" {
 }
 
 data "cloudflare_zone" "dev" {
-  name = "brucellino.dev"
+  filter = {
+    match = "any"
+    name  = "brucellino.dev"
+  }
 }
 
 # Add a record to the domain
-resource "cloudflare_record" "minecraft" {
+resource "cloudflare_dns_record" "minecraft" {
   zone_id = data.cloudflare_zone.dev.id
   name    = "minecraft"
-  value   = digitalocean_reserved_ip.public.ip_address
+  content = digitalocean_reserved_ip.public.ip_address
   type    = "A"
   ttl     = 60
   proxied = false
 }
 
 
-resource "cloudflare_record" "minecraft_srv" {
+resource "cloudflare_dns_record" "minecraft_srv" {
   zone_id = data.cloudflare_zone.dev.id
   name    = "mc_service"
   type    = "SRV"
-
-  data {
+  ttl     = 60
+  data = {
     service  = "_minecraft"
     proto    = "tcp"
     name     = "mc_service"
     priority = 0
     weight   = 0
     port     = 25565
-    target   = cloudflare_record.minecraft.name
+    target   = cloudflare_dns_record.minecraft.name
   }
 }

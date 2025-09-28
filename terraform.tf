@@ -1,24 +1,24 @@
 terraform {
-  required_version = ">1.2.0"
+  required_version = ">= 1.10.0"
   required_providers {
     vault = {
       source  = "hashicorp/vault"
-      version = ">= 3.8.2"
+      version = "~> 5"
     }
 
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = ">= 2.22.3"
+      version = "~> 2.67"
     }
 
     http = {
       source  = "hashicorp/http"
-      version = ">= 3.1.0"
+      version = "~> 3.5"
     }
 
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = ">= 3.23"
+      version = "~> 5.10"
     }
   }
 }
