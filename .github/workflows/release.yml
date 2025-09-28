@@ -16,28 +16,38 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: 'actions/checkout@v5'
+        uses: "actions/checkout@v5"
         with:
           fetch-depth: 0
       - name: Get Latest Consul
         run: |
-          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/consul\?limit\=20\&license_class\=oss | jq -r '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
+          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/consul\?limit\=20\&license_class\=oss \
+          | jq -r \
+          '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
+          echo ${release_url}
           curl -fSL ${release_url} -o consul.zip
-          unzip -p consul consul.zip ; chmod u+x consul
+          unzip consul.zip -p consul
+          chmod u+x consul
       - name: Start Consul dev server
         run: ./consul agent -server -dev &
       - name: Get Latest Vault
         run: |
-          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/vault\?limit\=20\&license_class\=oss | jq -r '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
+          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/vault\?limit\=20\&license_class\=oss \
+          | jq -r \
+          '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
           curl -fSL ${release_url} -o vault.zip
-          unzip -p vault vault.zip ; chmod u+x vault
+          unzip vault.zip -p vault
+          chmod u+x vault
       - name: Start Vault dev server
         run: ./vault server -dev &
       - name: Get Latest Terraform
         run: |
-          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/terraform\?limit\=20\&license_class\=oss | jq -r '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
+          release_url=$(curl https://api.releases.hashicorp.com/v1/releases/terraform\?limit\=20\&license_class\=oss \
+          | jq -r \
+          '. | map(select(.is_prerelease == false)) | .[0].builds[] | select (.arch == "amd64" and .os=="linux").url')
           curl -fSL ${release_url} -o terraform.zip
-          unzip -p terraform terraform.zip ; chmod u+x terraform
+          unzip terraform.zip -p terraform
+          chmod u+x terraform
       - name: Test
         run: cd test ; go test
         env:
@@ -55,7 +65,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 'lts/*'
+          node-version: "lts/*"
       - name: Install dependencies
         run: |
           npm install -D '@semantic-release/commit-analyzer' \
