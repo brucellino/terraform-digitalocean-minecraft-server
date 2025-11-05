@@ -39,9 +39,9 @@ examples themselves
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 5.10.1 |
-| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.67.0 |
-| <a name="provider_http"></a> [http](#provider\_http) | 3.5.0 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | ~> 5.10 |
+| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | ~> 2.67 |
+| <a name="provider_http"></a> [http](#provider\_http) | ~> 3.5 |
 
 ## Modules
 
