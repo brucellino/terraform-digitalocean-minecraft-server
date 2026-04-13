@@ -28,7 +28,7 @@ examples themselves
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.10.0 |
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 5.10 |
 | <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | ~> 2.67 |
@@ -38,7 +38,7 @@ examples themselves
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | ~> 5.10 |
 | <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | ~> 2.67 |
 | <a name="provider_http"></a> [http](#provider\_http) | ~> 3.5 |
@@ -50,7 +50,7 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [cloudflare_dns_record.minecraft](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record) | resource |
 | [cloudflare_dns_record.minecraft_srv](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/dns_record) | resource |
 | [digitalocean_droplet.minecraft](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet) | resource |
@@ -74,7 +74,7 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_cpus"></a> [cpus](#input\_cpus) | Number of CPUs we want with the instance | `number` | `4` | no |
 | <a name="input_create_droplet"></a> [create\_droplet](#input\_create\_droplet) | n/a | `bool` | `false` | no |
 | <a name="input_instance_admin_user"></a> [instance\_admin\_user](#input\_instance\_admin\_user) | Github user which will be made admin of the instance. Takes their ssh key from Github and adds it to the instance. | `string` | `"brucellino"` | no |
@@ -85,6 +85,6 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_sizes"></a> [sizes](#output\_sizes) | n/a |
 <!-- END_TF_DOCS -->
