@@ -33,7 +33,7 @@ examples themselves
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 5.10 |
 | <a name="requirement_digitalocean"></a> [digitalocean](#requirement\_digitalocean) | ~> 2.67 |
 | <a name="requirement_http"></a> [http](#requirement\_http) | ~> 3.5 |
-| <a name="requirement_vault"></a> [vault](#requirement\_vault) | ~> 5 |
+| <a name="requirement_vault"></a> [vault](#requirement\_vault) | >= 5 |
 
 ## Providers
 
