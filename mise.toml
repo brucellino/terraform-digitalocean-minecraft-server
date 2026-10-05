@@ -2,4 +2,4 @@
 terraform = "1.16.5"
 consul = "2.0.4"
 vault = "2.1.1"
-prek = "0.5.4"
+prek = "0.5.5"
