@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Activate tools
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v5
         with:
           version: 2026.10.3
           install: true
