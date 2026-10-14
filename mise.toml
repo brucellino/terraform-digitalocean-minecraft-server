@@ -1,5 +1,5 @@
 [tools]
 terraform = "1.16.5"
 consul = "2.0.4"
-vault = "2.1.1"
+vault = "2.1.2"
 prek = "0.5.5"
